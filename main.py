@@ -11,6 +11,9 @@ import pandas as pd
 from streamlit_agraph import agraph, Node, Edge, Config
 from entity_relation import *
 
+import spacy.cli
+
+spacy.cli.download('en_core_web_sm')
 
 nlp = spacy.load("en_core_web_sm")
 
