@@ -4,7 +4,9 @@ import spacy
 import scispacy
 
 from scispacy.abbreviation import AbbreviationDetector
+import spacy.cli
 
+spacy.cli.download('en_core_web_sm')
 nlp = spacy.load("en_core_web_sm")
 nlp.add_pipe("abbreviation_detector")
 
