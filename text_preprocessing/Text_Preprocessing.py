@@ -4,11 +4,6 @@ import spacy
 import scispacy
 
 from scispacy.abbreviation import AbbreviationDetector
-import spacy.cli
-
-spacy.cli.download('en_core_web_sm')
-nlp = spacy.load("en_core_web_sm")
-nlp.add_pipe("abbreviation_detector")
 
 CONTRACTION_MAP = {
     "ain't": "is not",
@@ -163,7 +158,7 @@ def expand_contractions(text, contraction_mapping=CONTRACTION_MAP):
     return expanded_text
 
 
-def expand_abbreviation(text):
+def expand_abbreviation(text, nlp):
     doc = nlp(text)
     for abrv in doc._.abbreviations:
         text = text.replace(abrv.text, abrv._.long_form.text)
@@ -195,7 +190,7 @@ def normalize_docs(documents):
     return normalized_documents
 
 
-def normalize_docs_text(doc):
+def normalize_docs_text(doc, nlp):
 
     doc = expand_contractions(doc)
     doc = re.sub(
@@ -209,6 +204,6 @@ def normalize_docs_text(doc):
     )
 
     doc = expand_contractions(doc)
-    doc = expand_abbreviation(doc)
+    doc = expand_abbreviation(doc, nlp)
 
     return doc
