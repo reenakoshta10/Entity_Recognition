@@ -17,6 +17,7 @@ spacy.cli.download('en_core_web_sm')
 
 nlp = spacy.load("en_core_web_sm")
 
+nlp.add_pipe("abbreviation_detector")
 
 # Create a page dropdown
 page = st.selectbox("Select Category", [
@@ -27,7 +28,7 @@ if page == "Article based Graph":
 
     sentence = st.text_input("Input your sentence here:")
     if sentence:
-        sentence = normalize_docs_text(sentence)
+        sentence = normalize_docs_text(sentence, nlp)
         article = nlp(sentence)
 
         input_df = find_rel(article, nlp)
